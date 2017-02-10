@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<security:authentication-manager>
+
+		<security:authentication-provider>
+			<security:user-service id="userService">
+				<security:user name="admin" password="admin"
+					authorities="USER" />
+			</security:user-service>
+		</security:authentication-provider>
+
+	</security:authentication-manager>
+
+	<security:http create-session="stateless"
+		use-expressions="true">
+		<security:intercept-url pattern="/teachers"
+			access="hasAnyRole('USER')" />
+		<security:intercept-url pattern="/students"
+			access="hasAnyRole('USER')" />
+		<security:intercept-url pattern="/classrooms"
+			access="hasAnyRole('USER')" />
+		<security:intercept-url pattern="/teacher/**"
+			access="hasAnyRole('USER')" />
+		<security:intercept-url pattern="/student/**"
+			access="hasAnyRole('USER')" />
+		<security:intercept-url pattern="/classroom/**"
+			access="hasAnyRole('USER')" />
+
+		<security:http-basic />
+	</security:http>
+</beans>
